@@ -1,0 +1,25 @@
+_STRT_NEW_FORM_ 1 RA_FILLED_SHRS 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:RA_FILLED_SHRS
+/***************************************************
+Strat Rule. Update the executed shares and executed values.
+**************************************************/
+
+char side[5];
+
+Get_Column_Str("ORDER_SIDE",side);
+if(strstr(side,"B"))
+{
+	Set_Column_Value_Save("PAIR_EXECS",BUY_EXEC_SHRS);
+    Set_Column_Value_Save("PAIR_VALUE",BUY_EXEC_SHRS * BUY_APR);
+    return true;
+}
+else if(strstr(side,"S"))
+{
+    Set_Column_Value_Save("PAIR_EXECS",SELL_EXEC_SHRS);
+    Set_Column_Value_Save("PAIR_VALUE",SELL_EXEC_SHRS * SELL_APR);
+    return true;
+}
+else
+	return 0;
+
+
+_END_FORM_ *****************************************

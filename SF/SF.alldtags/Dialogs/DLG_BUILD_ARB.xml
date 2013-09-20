@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?><flextrade>
+
+<broker name="Dialogs">
+	<strat CancelAnalytic="" SubmitAnalytic="" fixtag="0" height="107" name="DLG_BUILD_ARB" refreshanalytic="" showbuttons="true" startupanalytic="DLG_BUILD_ARB_INIT" width="619" x="656" y="310">
+		<param AutoComplete="false" AutoCompleteBlockNonExisting="false" anchor="5" complete="false" fixtag="0" isstring="true" issymbol="false" name="Side1" required="false" type="dropdown" visible="true" x="5" y="30">
+			<value></value>
+			<analytic>RA_SIDE_CHK</analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font>Sans 8</font>
+			<option alias="BUY">BUY</option>
+			<option alias="SELL">SELL</option>
+			<default>BUY</default>
+		</param>
+		<param AutoComplete="false" AutoCompleteBlockNonExisting="false" anchor="5" complete="false" fixtag="0" isstring="true" issymbol="false" name="Side2" required="false" type="dropdown" visible="true" x="5" y="73">
+			<value></value>
+			<analytic>RA_SIDE_CHK1</analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font>Sans 8</font>
+			<option alias="SELL">SELL</option>
+			<option alias="BUY">BUY</option>
+			<default>SELL</default>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="lblBench1" required="false" type="label" visible="true" x="398" y="80">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#FFFFFF</fgcolor>
+			<font>Sans 8</font>
+			<label>Benchmark</label>
+			<image></image>
+		</param>
+		<param anchor="1" fixtag="0" isstring="false" name="lblClipSize" required="false" type="label" visible="false" x="398" y="80">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#E5E5E5</fgcolor>
+			<font>Sans 8</font>
+			<label>ClipSize (lots)</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="sClipSize" required="false" type="doublespin" visible="false" x="490" y="75">
+			<value>0.000000</value>
+			<analytic>RA_EDIT_CLIPSIZE</analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font>Sans 8</font>
+			<default>1.000000</default>
+			<spintype>1.000000</spintype>
+			<min>1.000000</min>
+			<max>999.000000</max>
+			<step>1.000000</step>
+			<decimal>0</decimal>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="Lot1" required="false" type="doublespin" visible="true" x="186" y="30">
+			<value>0.000000</value>
+			<analytic>RA_UPDATE</analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font>Sans 8</font>
+			<default>1.000000</default>
+			<spintype>1.000000</spintype>
+			<min>1.000000</min>
+			<max>9999.000000</max>
+			<step>1.000000</step>
+			<decimal>0</decimal>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="Bench" required="false" type="doublespin" visible="true" x="490" y="72">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font>Sans 8</font>
+			<default>0.000000</default>
+			<spintype>3.000000</spintype>
+			<min>-99999.000000</min>
+			<max>99999.000000</max>
+			<step>0.050000</step>
+			<decimal>2</decimal>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="Label8" required="false" type="label" visible="true" x="251" y="35">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font>Sans 8</font>
+			<label>X</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="lblLotSize1" required="false" type="label" visible="true" x="266" y="5">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#FFFFFF</fgcolor>
+			<font>Sans 8</font>
+			<label>LotSize</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="lblTotQty1" required="false" type="label" visible="true" x="316" y="5">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#FFFFFF</fgcolor>
+			<font>Sans 8</font>
+			<label>TotalQty</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="LotSize1" required="false" type="label" visible="true" x="286" y="35">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#BFBFBF</fgcolor>
+			<font>Sans 8</font>
+			<label>1</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="Qty1" required="false" type="label" visible="true" x="341" y="35">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#E5E5E5</fgcolor>
+			<font>Sans 8</font>
+			<label>0</label>
+			<image></image>
+		</param>
+		<param anchor="0" fixtag="0" isstring="true" name="StratName" required="false" type="entry" visible="true" x="491" y="30">
+			<value></value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font>Sans 8</font>
+			<default></default>
+			<size>120</size>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="rdr" required="false" type="label" visible="true" x="251" y="80">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font>Sans 8</font>
+			<label>X</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="LotSize2" required="false" type="label" visible="true" x="286" y="80">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#BFBFBF</fgcolor>
+			<font>Sans 8</font>
+			<label>1</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="Qty2" required="false" type="label" visible="true" x="341" y="80">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#E5E5E5</fgcolor>
+			<font>Sans 8</font>
+			<label>0</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="ClipSize" required="false" type="label" visible="false" x="505" y="80">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#BFBFBF</fgcolor>
+			<font>Sans 8</font>
+			<label>0</label>
+			<image></image>
+		</param>
+		<param AutoComplete="false" AutoCompleteBlockNonExisting="true" anchor="5" complete="true" fixtag="0" isstring="true" issymbol="false" name="symbolOption1" required="false" type="dropdown" visible="true" x="66" y="30">
+			<value></value>
+			<analytic>RA_LOAD_SYM1</analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font>Sans 8</font>
+			<option alias="AG1305">AG1305</option>
+			<option alias="AG1306">AG1306</option>
+			<option alias="AG1307">AG1307</option>
+			<option alias="AG1308">AG1308</option>
+			<option alias="AG1309">AG1309</option>
+			<option alias="AG1310">AG1310</option>
+			<option alias="AG1311">AG1311</option>
+			<option alias="AG1312">AG1312</option>
+			<option alias="AG1401">AG1401</option>
+			<option alias="AG1402">AG1402</option>
+			<option alias="AG1403">AG1403</option>
+			<option alias="AG1404">AG1404</option>
+			<option alias="AG1405">AG1405</option>
+			<option alias="AG1406">AG1406</option>
+			<option alias="AG1407">AG1407</option>
+			<option alias="AG1408">AG1408</option>
+			<option alias="AG1409">AG1409</option>
+			<option alias="AG1410">AG1410</option>
+			<option alias="AG1411">AG1411</option>
+			<option alias="AG1412">AG1412</option>
+			<option alias="AG1501">AG1501</option>
+			<option alias="AG1502">AG1502</option>
+			<option alias="AG1503">AG1503</option>
+			<option alias="AG1504">AG1504</option>
+			<option alias="AG1505">AG1505</option>
+			<option alias="AG1506">AG1506</option>
+			<option alias="AG1507">AG1507</option>
+			<option alias="AG1508">AG1508</option>
+			<option alias="AG1509">AG1509</option>
+			<option alias="AG1510">AG1510</option>
+			<option alias="AG1511">AG1511</option>
+			<option alias="AG1512">AG1512</option>
+			<option alias="AU1305">AU1305</option>
+			<option alias="AU1306">AU1306</option>
+			<option alias="AU1307">AU1307</option>
+			<option alias="AU1308">AU1308</option>
+			<option alias="AU1309">AU1309</option>
+			<option alias="AU1310">AU1310</option>
+			<option alias="AU1311">AU1311</option>
+			<option alias="AU1312">AU1312</option>
+			<option alias="AU1401">AU1401</option>
+			<option alias="AU1402">AU1402</option>
+			<option alias="AU1403">AU1403</option>
+			<option alias="AU1404">AU1404</option>
+			<option alias="AU1405">AU1405</option>
+			<option alias="AU1406">AU1406</option>
+			<option alias="AU1407">AU1407</option>
+			<option alias="AU1408">AU1408</option>
+			<option alias="AU1409">AU1409</option>
+			<option alias="AU1410">AU1410</option>
+			<option alias="AU1411">AU1411</option>
+			<option alias="AU1412">AU1412</option>
+			<option alias="AU1501">AU1501</option>
+			<option alias="AU1502">AU1502</option>
+			<option alias="AU1503">AU1503</option>
+			<option alias="AU1504">AU1504</option>
+			<option alias="AU1505">AU1505</option>
+			<option alias="AU1506">AU1506</option>
+			<option alias="AU1507">AU1507</option>
+			<option alias="AU1508">AU1508</option>
+			<option alias="AU1509">AU1509</option>
+			<option alias="AU1510">AU1510</option>
+			<option alias="AU1511">AU1511</option>
+			<option alias="AU1512">AU1512</option>
+			<option alias="CU1305">CU1305</option>
+			<option alias="CU1306">CU1306</option>
+			<option alias="CU1307">CU1307</option>
+			<option alias="CU1308">CU1308</option>
+			<option alias="CU1309">CU1309</option>
+			<option alias="CU1310">CU1310</option>
+			<option alias="CU1311">CU1311</option>
+			<option alias="CU1312">CU1312</option>
+			<option alias="CU1401">CU1401</option>
+			<option alias="CU1402">CU1402</option>
+			<option alias="CU1403">CU1403</option>
+			<option alias="CU1404">CU1404</option>
+			<option alias="CU1405">CU1405</option>
+			<option alias="CU1406">CU1406</option>
+			<option alias="CU1407">CU1407</option>
+			<option alias="CU1408">CU1408</option>
+			<option alias="CU1409">CU1409</option>
+			<option alias="CU1410">CU1410</option>
+			<option alias="CU1411">CU1411</option>
+			<option alias="CU1412">CU1412</option>
+			<option alias="CU1501">CU1501</option>
+			<option alias="CU1502">CU1502</option>
+			<option alias="CU1503">CU1503</option>
+			<option alias="CU1504">CU1504</option>
+			<option alias="CU1505">CU1505</option>
+			<option alias="CU1506">CU1506</option>
+			<option alias="CU1507">CU1507</option>
+			<option alias="CU1508">CU1508</option>
+			<option alias="CU1509">CU1509</option>
+			<option alias="CU1510">CU1510</option>
+			<option alias="CU1511">CU1511</option>
+			<option alias="CU1512">CU1512</option>
+			<option alias="IF1305">IF1305</option>
+			<option alias="IF1306">IF1306</option>
+			<option alias="IF1307">IF1307</option>
+			<option alias="IF1308">IF1308</option>
+			<option alias="IF1309">IF1309</option>
+			<option alias="IF1310">IF1310</option>
+			<option alias="IF1311">IF1311</option>
+			<option alias="IF1312">IF1312</option>
+			<option alias="IF1401">IF1401</option>
+			<option alias="IF1402">IF1402</option>
+			<option alias="IF1403">IF1403</option>
+			<option alias="IF1404">IF1404</option>
+			<option alias="IF1405">IF1405</option>
+			<option alias="IF1406">IF1406</option>
+			<option alias="IF1407">IF1407</option>
+			<option alias="IF1408">IF1408</option>
+			<option alias="IF1409">IF1409</option>
+			<option alias="IF1410">IF1410</option>
+			<option alias="IF1411">IF1411</option>
+			<option alias="IF1412">IF1412</option>
+			<option alias="IF1501">IF1501</option>
+			<option alias="IF1502">IF1502</option>
+			<option alias="IF1503">IF1503</option>
+			<option alias="IF1504">IF1504</option>
+			<option alias="IF1505">IF1505</option>
+			<option alias="IF1506">IF1506</option>
+			<option alias="IF1507">IF1507</option>
+			<option alias="IF1508">IF1508</option>
+			<option alias="IF1509">IF1509</option>
+			<option alias="IF1510">IF1510</option>
+			<option alias="IF1511">IF1511</option>
+			<option alias="IF1512">IF1512</option>
+			<option alias="AU1----GOLD">AU1----GOLD</option>
+			<option alias="CU1--COPPER">CU1--COPPER</option>
+			<option alias="AG1--SILVER">AG1--SILVER</option>
+			<option alias="IF1--CSI300">IF1--CSI300</option>
+			<default>IF1306</default>
+		</param>
+		<param AutoComplete="false" AutoCompleteBlockNonExisting="false" anchor="8" complete="true" fixtag="0" isstring="true" issymbol="false" name="symbolOption2" required="false" type="dropdown" visible="true" x="66" y="75">
+			<value></value>
+			<analytic>RA_LOAD_SYM2</analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font>Sans 8</font>
+			<option alias="AG1305">AG1305</option>
+			<option alias="AG1306">AG1306</option>
+			<option alias="AG1307">AG1307</option>
+			<option alias="AG1308">AG1308</option>
+			<option alias="AG1309">AG1309</option>
+			<option alias="AG1310">AG1310</option>
+			<option alias="AG1311">AG1311</option>
+			<option alias="AG1312">AG1312</option>
+			<option alias="AG1401">AG1401</option>
+			<option alias="AG1402">AG1402</option>
+			<option alias="AG1403">AG1403</option>
+			<option alias="AG1404">AG1404</option>
+			<option alias="AG1405">AG1405</option>
+			<option alias="AG1406">AG1406</option>
+			<option alias="AG1407">AG1407</option>
+			<option alias="AG1408">AG1408</option>
+			<option alias="AG1409">AG1409</option>
+			<option alias="AG1410">AG1410</option>
+			<option alias="AG1411">AG1411</option>
+			<option alias="AG1412">AG1412</option>
+			<option alias="AG1501">AG1501</option>
+			<option alias="AG1502">AG1502</option>
+			<option alias="AG1503">AG1503</option>
+			<option alias="AG1504">AG1504</option>
+			<option alias="AG1505">AG1505</option>
+			<option alias="AG1506">AG1506</option>
+			<option alias="AG1507">AG1507</option>
+			<option alias="AG1508">AG1508</option>
+			<option alias="AG1509">AG1509</option>
+			<option alias="AG1510">AG1510</option>
+			<option alias="AG1511">AG1511</option>
+			<option alias="AG1512">AG1512</option>
+			<option alias="AU1305">AU1305</option>
+			<option alias="AU1306">AU1306</option>
+			<option alias="AU1307">AU1307</option>
+			<option alias="AU1308">AU1308</option>
+			<option alias="AU1309">AU1309</option>
+			<option alias="AU1310">AU1310</option>
+			<option alias="AU1311">AU1311</option>
+			<option alias="AU1312">AU1312</option>
+			<option alias="AU1401">AU1401</option>
+			<option alias="AU1402">AU1402</option>
+			<option alias="AU1403">AU1403</option>
+			<option alias="AU1404">AU1404</option>
+			<option alias="AU1405">AU1405</option>
+			<option alias="AU1406">AU1406</option>
+			<option alias="AU1407">AU1407</option>
+			<option alias="AU1408">AU1408</option>
+			<option alias="AU1409">AU1409</option>
+			<option alias="AU1410">AU1410</option>
+			<option alias="AU1411">AU1411</option>
+			<option alias="AU1412">AU1412</option>
+			<option alias="AU1501">AU1501</option>
+			<option alias="AU1502">AU1502</option>
+			<option alias="AU1503">AU1503</option>
+			<option alias="AU1504">AU1504</option>
+			<option alias="AU1505">AU1505</option>
+			<option alias="AU1506">AU1506</option>
+			<option alias="AU1507">AU1507</option>
+			<option alias="AU1508">AU1508</option>
+			<option alias="AU1509">AU1509</option>
+			<option alias="AU1510">AU1510</option>
+			<option alias="AU1511">AU1511</option>
+			<option alias="AU1512">AU1512</option>
+			<option alias="CU1305">CU1305</option>
+			<option alias="CU1306">CU1306</option>
+			<option alias="CU1307">CU1307</option>
+			<option alias="CU1308">CU1308</option>
+			<option alias="CU1309">CU1309</option>
+			<option alias="CU1310">CU1310</option>
+			<option alias="CU1311">CU1311</option>
+			<option alias="CU1312">CU1312</option>
+			<option alias="CU1401">CU1401</option>
+			<option alias="CU1402">CU1402</option>
+			<option alias="CU1403">CU1403</option>
+			<option alias="CU1404">CU1404</option>
+			<option alias="CU1405">CU1405</option>
+			<option alias="CU1406">CU1406</option>
+			<option alias="CU1407">CU1407</option>
+			<option alias="CU1408">CU1408</option>
+			<option alias="CU1409">CU1409</option>
+			<option alias="CU1410">CU1410</option>
+			<option alias="CU1411">CU1411</option>
+			<option alias="CU1412">CU1412</option>
+			<option alias="CU1501">CU1501</option>
+			<option alias="CU1502">CU1502</option>
+			<option alias="CU1503">CU1503</option>
+			<option alias="CU1504">CU1504</option>
+			<option alias="CU1505">CU1505</option>
+			<option alias="CU1506">CU1506</option>
+			<option alias="CU1507">CU1507</option>
+			<option alias="CU1508">CU1508</option>
+			<option alias="CU1509">CU1509</option>
+			<option alias="CU1510">CU1510</option>
+			<option alias="CU1511">CU1511</option>
+			<option alias="CU1512">CU1512</option>
+			<option alias="IF1305">IF1305</option>
+			<option alias="IF1306">IF1306</option>
+			<option alias="IF1307">IF1307</option>
+			<option alias="IF1308">IF1308</option>
+			<option alias="IF1309">IF1309</option>
+			<option alias="IF1310">IF1310</option>
+			<option alias="IF1311">IF1311</option>
+			<option alias="IF1312">IF1312</option>
+			<option alias="IF1401">IF1401</option>
+			<option alias="IF1402">IF1402</option>
+			<option alias="IF1403">IF1403</option>
+			<option alias="IF1404">IF1404</option>
+			<option alias="IF1405">IF1405</option>
+			<option alias="IF1406">IF1406</option>
+			<option alias="IF1407">IF1407</option>
+			<option alias="IF1408">IF1408</option>
+			<option alias="IF1409">IF1409</option>
+			<option alias="IF1410">IF1410</option>
+			<option alias="IF1411">IF1411</option>
+			<option alias="IF1412">IF1412</option>
+			<option alias="IF1501">IF1501</option>
+			<option alias="IF1502">IF1502</option>
+			<option alias="IF1503">IF1503</option>
+			<option alias="IF1504">IF1504</option>
+			<option alias="IF1505">IF1505</option>
+			<option alias="IF1506">IF1506</option>
+			<option alias="IF1507">IF1507</option>
+			<option alias="IF1508">IF1508</option>
+			<option alias="IF1509">IF1509</option>
+			<option alias="IF1510">IF1510</option>
+			<option alias="IF1511">IF1511</option>
+			<option alias="IF1512">IF1512</option>
+			<option alias="AU1----GOLD">AU1----GOLD</option>
+			<option alias="CU1--COPPER">CU1--COPPER</option>
+			<option alias="AG1--SILVER">AG1--SILVER</option>
+			<option alias="IF1--CSI300">IF1--CSI300</option>
+			<default>IF1306</default>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="Refresh" required="false" type="pushbutton" visible="true" x="588" y="71">
+			<value>0.000000</value>
+			<analytic>RA_UPDATE</analytic>
+			<description></description>
+			<bgcolor>#AF9276</bgcolor>
+			<fgcolor>#000000</fgcolor>
+			<font>Sans 8</font>
+			<width>25</width>
+			<height>25</height>
+			<label></label>
+			<image>arrowUpDown.gif</image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="Sym1" required="false" type="label" visible="false" x="167" y="35">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#A52A2A</fgcolor>
+			<font>Sans B 10</font>
+			<label>-</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="Sym2" required="false" type="label" visible="false" x="167" y="80">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#A52A2A</fgcolor>
+			<font>Sans B 10</font>
+			<label>-</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="true" name="tbSym1" required="false" type="entry" visible="true" x="370" y="0">
+			<value></value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<default></default>
+			<size>10</size>
+		</param>
+		<param anchor="5" fixtag="0" isstring="true" name="tbSym2" required="false" type="entry" visible="true" x="384" y="0">
+			<value></value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<default></default>
+			<size>10</size>
+		</param>
+		<param anchor="5" fixtag="0" isstring="true" name="tbQty1" required="false" type="entry" visible="true" x="370" y="52">
+			<value></value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<default></default>
+			<size>10</size>
+		</param>
+		<param anchor="5" fixtag="0" isstring="true" name="tbQty2" required="false" type="entry" visible="true" x="384" y="52">
+			<value></value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<default></default>
+			<size>10</size>
+		</param>
+		<param anchor="5" fixtag="0" isstring="true" name="tbClipSize" required="false" type="entry" visible="false" x="568" y="75">
+			<value></value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<default></default>
+			<size>10</size>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="Lot2" required="false" type="doublespin" visible="true" x="186" y="75">
+			<value>0.000000</value>
+			<analytic>RA_UPDATE2</analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<default>1.000000</default>
+			<spintype>1.000000</spintype>
+			<min>1.000000</min>
+			<max>9999.000000</max>
+			<step>1.000000</step>
+			<decimal>0</decimal>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="Label27" required="false" type="label" visible="true" x="186" y="5">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#FFFFFF</fgcolor>
+			<font></font>
+			<label>Qty (Lots)</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="true" name="tbLegId1" required="false" type="entry" visible="true" x="370" y="28">
+			<value></value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<default></default>
+			<size>10</size>
+		</param>
+		<param anchor="5" fixtag="0" isstring="true" name="tbLegId2" required="false" type="entry" visible="true" x="384" y="27">
+			<value></value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<default></default>
+			<size>10</size>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="Separator6" required="false" type="separator" visible="true" x="380" y="3">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<vertical>true</vertical>
+			<length>100</length>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="lblStratName" required="false" type="label" visible="true" x="398" y="35">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#FFFFFF</fgcolor>
+			<font>Sans 8</font>
+			<label>Strat Name</label>
+			<image></image>
+		</param>
+	</strat>
+</broker>
+
+</flextrade>

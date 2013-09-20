@@ -1,0 +1,29 @@
+_STRT_NEW_FORM_ 1 RA_PCT_COMPLETE 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:RA_PCT_COMPLETE
+/***************************************************
+Strat Rule. Calculate and populate the completed percentage 
+**************************************************/
+
+double sllby_trgt = Value_Cell_Else("TARGET_SIZE", -1);
+double pair_execs = Value_Cell_Else("PAIR_EXECS", -1);
+char side[5];
+
+Get_Column_Str("PAIR_SIDE", side);
+double frac_done = 0;
+
+switch (side[0]) {
+case 'S':
+case 's':
+		frac_done = (pair_execs / sllby_trgt);
+		break;
+case 'B':
+case 'b':
+        frac_done = (pair_execs / sllby_trgt);
+        break;
+}
+
+double pct_complete = frac_done * 100;
+Set_Column_Value_Save("PCT_DONE",  pct_complete);
+return true;
+
+
+_END_FORM_ *****************************************

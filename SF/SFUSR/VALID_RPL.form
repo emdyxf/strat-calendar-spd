@@ -1,0 +1,76 @@
+_STRT_NEW_FORM_ 1 VALID_RPL 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:VALID_RPL
+/******************************************************************
+Reserved Rule. Runs before sending out replace order.
+******************************************************************/
+
+char strDebug[216]="";
+char strFix[216]="";
+char strRule[20]="VALID_RPL";
+char token[50][50];
+int i = 0;
+
+char StratPairID[32]="";
+Get_Column_Str("PAIR_ID",StratPairID);
+
+if(strlen(StratPairID)) // If PairID set -> Send Strat replace to OMRule Loopback
+{
+	// Strategy Tokens for RPL
+	//  0	   1	   2	 3    4   5     6         7        8		9
+	//pairId  sym2  side port bench clipsize valid_pair ratio lotsize LegId
+	
+	Get_param_str(strFix,0);
+	sprintf(strDebug,"%s: SYM %s strFix  %s",strRule,SYM,strFix);
+	Pop_Msg1(strDebug);
+
+	if(strlen(strFix) > 0)
+	{
+		char *p = strtok(strFix," ");
+		while(p)
+		{
+		sprintf(token[i],"%s",p);		
+		i++;
+		p = strtok(NULL," ");
+		}
+	}
+
+	Set_FixTag_Str(FIX_TAG_STRATEGYNAME,FLEX_OMRULE_CALSPD);
+	FTStr  ftDest; Get_Default_Listed_Dest(ftDest);
+	Set_FixTag_Str(FIX_TAG_DESTINATION,ftDest.str());
+	Set_FixTag_Str(FIX_TAG_OMUSER,"UA");
+
+	Set_FixTag_Str(FIX_TAG_CLIPSIZE_PR,token[TOKEN_RPL_CLIPSIZE]);
+	Set_FixTag_Str(FIX_TAG_PAIRID_PR,token[TOKEN_RPL_PAIRID]);
+	Set_FixTag_Str(FIX_TAG_PAIRSYM_PR,token[TOKEN_RPL_SYM_2]);
+	Set_FixTag_Str(FIX_TAG_BENCHMARK_PR,token[TOKEN_RPL_BENCH]);
+	Set_FixTag_Str(FIX_TAG_PORTFOLIO_PR,token[TOKEN_RPL_PORT]);
+	Set_FixTag_Str(FIX_TAG_RATIO_PR,token[TOKEN_RPL_RATIO]);
+	Set_FixTag_Str(FIX_TAG_LOTSIZE_PR,token[TOKEN_RPL_LOTSIZE]);
+	Set_FixTag_Str(FIX_TAG_LEGID_PR,token[TOKEN_RPL_LEGID]);
+
+	// Disable Account Info
+	Set_Send_Order_Acct(" ");
+	
+	if(strstr("STOP",token[TOKEN_RPL_VALIDPAIR]))	// After tokenizing tokens
+	{
+		Set_FixTag_Str(FIX_TAG_RUNNING_PR,"0");
+	}
+	else {
+		Set_FixTag_Str(FIX_TAG_RUNNING_PR,"1");
+	}
+	
+	// For allowing increasing qty funtionality
+	int nOrderShares = Get_Order_Size();
+	Set_Send_Order_Size(nOrderShares + QTY_OFFSET);
+	
+} // ENDIF: Replacing a Pair-Order
+else // If NO PairID -> Replace is not allowed at SHFE
+{
+	sprintf(strDebug,"%s: %s [RPLACE not Allowed in SHFE!]",strRule,SYM);
+	Pop_Msg1(strDebug);
+	return false;
+}
+
+return true;
+
+
+_END_FORM_ *****************************************

@@ -1,0 +1,27 @@
+_STRT_NEW_FORM_ 1 RA_EDIT_CLIPSIZE 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:RA_EDIT_CLIPSIZE
+/******************************************************************
+Strat Rule. Update Clip Size. 
+******************************************************************/
+
+// Defaulting all clip size to be 1.
+
+char lotsize1[32];
+
+int s1 = 1, s2 = 1;
+int c1 = 1;
+FTStr cs;
+
+DlgGetControlValue("LotSize1",lotsize1);
+
+s1 = atoi(lotsize1);
+
+c1 = s1 * s2;
+cs = c1;
+
+DlgSetControlValue("ClipSize", cs.str());
+DlgSetControlValue("tbClipSize", cs.str());
+
+return true;
+
+
+_END_FORM_ *****************************************

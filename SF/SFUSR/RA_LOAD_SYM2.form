@@ -1,0 +1,25 @@
+_STRT_NEW_FORM_ 1 RA_LOAD_SYM2 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:RA_LOAD_SYM2
+/***************************************************
+Strat Rule. Load information of symbol 1
+**************************************************/
+
+FTStr sym, month, year, sym2, isRatio;
+sym2 = "";
+
+DlgGetControlValue("symbolOption2", sym.str());
+sym2 += sym;
+
+DlgSetControlValue("Sym2", sym2.str());
+DlgSetControlValue("tbSym2", sym2.str());
+DlgSetControlValue("tbLegId2", LEGID_2);
+
+RunRule(RA_GET_LOT);
+
+RunRule(RA_EDIT_CLIPSIZE);
+
+RunRule(RA_UPDATE2);
+
+return true;
+
+
+_END_FORM_ *****************************************

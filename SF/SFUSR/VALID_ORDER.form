@@ -1,0 +1,86 @@
+_STRT_NEW_FORM_ 1 VALID_ORDER 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:VALID_ORDER
+/******************************************************************
+Reserved Rule. Runs before sending out new order.
+******************************************************************/
+
+char strDebug[216]="";
+char strFix[216]="";
+char strRule[20]="VALID_ORDER";
+char token[50][50];
+int i = 0;
+
+char StratPairID[32]="";
+Get_Column_Str("PAIR_ID",StratPairID);
+
+if(strlen(StratPairID)) // If PairID set -> Send Strat order to OMRule Loopback
+{
+	// Strategy tokens for NEW
+	// 0	1	  2 	3	   4 	  5 	   6	7	  8	       9		10	     11	   12 
+	//sym1 sym2 side1 side2 pairid  portfolio bench qty clipsize valid_pair ratio lotsize legid
+	
+	Get_param_str(strFix,0);
+	sprintf(strDebug,"%s: SYM %s strFix  %s",strRule,SYM,strFix);
+	Pop_Msg1(strDebug);
+	
+	if(strlen(strFix) > 0)
+	{
+		char *p = strtok(strFix,",");
+		while(p)
+		{
+		sprintf(token[i],"%s",p);
+		i++;
+		p = strtok(NULL,",");
+		}
+	}
+	else
+	{
+		Pop_Msg_Color("No Strat Token : Send new order from ladder!", 0, "yellow", "black");
+		Set_Send_Order_Wave(PORTFOLIO);
+		return true;
+	}
+
+	Set_FixTag_Str(FIX_TAG_STRATEGYNAME,FLEX_OMRULE_CALSPD);
+	FTStr  ftDest; Get_Default_Listed_Dest(ftDest);
+	Set_FixTag_Str(FIX_TAG_DESTINATION,ftDest.str());
+	Set_FixTag_Str(FIX_TAG_OMUSER,"UA");
+
+	Set_FixTag_Str(FIX_TAG_PAIRID_PR,token[TOKEN_PAIRID]);
+	Set_FixTag_Str(FIX_TAG_BENCHMARK_PR,token[TOKEN_BENCH]);
+	Set_FixTag_Str(FIX_TAG_CLIPSIZE_PR,token[TOKEN_CLIPSIZE]);
+	Set_FixTag_Str(FIX_TAG_PORTFOLIO_PR,token[TOKEN_PORT]);
+	Set_FixTag_Str(FIX_TAG_RUNNING_PR,token[TOKEN_VALIDPAIR]);
+	Set_FixTag_Str(FIX_TAG_RATIO_PR,token[TOKEN_RATIO]);
+	Set_FixTag_Str(FIX_TAG_LOTSIZE_PR,token[TOKEN_LOTZISE]);
+	Set_FixTag_Str(FIX_TAG_LEGID_PR,token[TOKEN_LEGID]);
+
+	if(!strcmp(SYM,token[TOKEN_SYM_1])) // If SYM is first symbol 
+	{
+		Set_FixTag_Str(FIX_TAG_PAIRSYM_PR,token[TOKEN_SYM_2]);
+	}
+	if(!strcmp(SYM,token[TOKEN_SYM_2])) // If SYM is second symbol 
+	{
+		Set_FixTag_Str(FIX_TAG_PAIRSYM_PR,token[TOKEN_SYM_1]);
+	}
+
+	// Disable Account Info
+	Set_Send_Order_Acct(" ");
+
+	// For allowing increasing qty funtionality
+	// This will help to keep the strategy running at backend even after fully fill
+	// so that further amendment is allowed
+	int nOrderShares = Get_Order_Size();
+	Set_Send_Order_Size(nOrderShares + QTY_OFFSET);
+
+	// This has been sent while building the strategy
+	//Set_Send_Order_Dest(ALGO_DEST);
+	
+} //ENDIF: Send Pair Order  
+else // If NO PairID -> Send normal order to SHFE directly
+{
+	Set_Send_Order_Wave(PORTFOLIO);
+}
+
+return true;
+
+
+_END_FORM_ *****************************************

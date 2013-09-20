@@ -1,0 +1,224 @@
+_STRT_NEW_FORM_ 1 RA_EDIT 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:RA_EDIT
+/******************************************************************
+Strat Rule. Edit Strategy Parameters
+******************************************************************/
+
+char strDebug[512]="";
+FlexAppRules::RowInfoArray row;
+
+int nRows = MainGetSelectedRows(row);
+if(nRows < 2)
+{
+	MsgBox("Info", "Select 2 rows", 'I');
+	return 0;
+}
+
+FTStr s, sym1, sym2, side1, side2, port, port2;
+double bench = 0.0, dBaseQty = 0.0;
+int qty1 = 0, qty2 = 0, cSize = 0,nBaseQty=0;
+FTStr sval, param;
+
+port = row[0].GetPortfolio();
+port2 = row[1].GetPortfolio();
+
+if(strcmp(port.str(),port2.str()))
+{
+	MsgBox("Invalid Pair","Selected Symbols do not belong to the same pair" ,'E');
+	return false;
+}
+
+s = "";
+sym1 = row[0].GetSymbol();
+sym2 = row[1].GetSymbol();
+
+param = "Sym1";
+sval = sym1;
+s.Set_Param_Sval(param,sval);
+
+param = "Sym2";
+sval = sym2;
+s.Set_Param_Sval(param,sval);
+
+Get_Port_Sym_Column_Value(port.str(), sym1.str(), "BASE_QTY", dBaseQty);
+param = "baseQty";
+sval = dBaseQty;
+s.Set_Param_Sval(param, sval);
+nBaseQty = int(dBaseQty);
+if(nBaseQty < 1 )
+{
+	Pop_Msg1("Base Qty is invalid! Fail to edit!");
+	return false;
+}	
+Get_Port_Sym_Column_Str(port.str(), sym1.str(), "ORDER_SIDE", side1.str());
+param = "Side1";
+sval = side1;
+s.Set_Param_Sval(param, sval);
+
+Get_Port_Sym_Column_Str(port.str(), sym2.str(), "ORDER_SIDE", side2.str());
+param = "Side2";
+sval = side2;
+s.Set_Param_Sval(param, sval);
+
+double  dblBench = 0.0;
+Get_Port_Sym_Column_Value(port.str(), sym1.str(), "SLLBY_SPREAD", dblBench);
+
+char szBench[32]="";
+sprintf(szBench,"%.2f",dblBench);
+
+param = "Bench";
+sval = szBench;
+s.Set_Param_Sval(param, sval);
+
+int lot = 0;
+lot = GetSymbolLotSize(sym1);
+
+if (lot < 1)
+{
+	Pop_Msg1("Lot Size is invalid! Unable to edit!");
+	return false;
+}
+sval = lot;
+
+param = "LotSize1";
+s.Set_Param_Sval(param, sval);
+
+param = "LotSize2";
+s.Set_Param_Sval(param, sval);
+
+param = "LotSize";
+s.Set_Param_Sval(param, sval);
+
+//Quantity1
+int quantity1 = 0;
+Get_Port_Sym_Column_Value(port.str(), sym1.str(), "TARGET_SIZE", quantity1);
+
+int q1 = quantity1 / (nBaseQty * lot);
+param = "sQty1";
+sval = q1;
+s.Set_Param_Sval(param, sval);
+
+param = "Quantity1";
+sval = quantity1;
+s.Set_Param_Sval(param, sval);
+
+param = "lblQuantity1";
+s.Set_Param_Sval(param, sval);
+
+//Quantity2
+int quantity2 = 0;
+Get_Port_Sym_Column_Value(port.str(), sym2.str(), "TARGET_SIZE", quantity2);
+
+int q2 = quantity2 / (nBaseQty * lot);
+param = "sQty2";
+sval = q2;
+s.Set_Param_Sval(param, sval);
+
+param = "Quantity2";
+sval = quantity2;
+s.Set_Param_Sval(param, sval);
+
+param = "lblQuantity2";
+s.Set_Param_Sval(param, sval);
+
+int clipsize = 0;
+Get_Port_Sym_Column_Value(port.str(), sym1.str(), "CLIPSIZE", clipsize);
+
+int m = clipsize / lot;
+param = "sClipSize";
+sval = m;
+s.Set_Param_Sval(param, sval);
+
+param = "ClipSize";
+sval = clipsize;
+s.Set_Param_Sval(param, sval);
+
+param = "tbClipSize";
+s.Set_Param_Sval(param, sval);
+
+Pop_Msg1(s);
+
+int flag = Prompt_Dlg("DLG_EDIT_ARB",s);
+if(!flag) return 0;
+
+while(s.Get_Param_Sval(param,sval))
+{	
+	if(!strcmp(param.str(),"Quantity1"))
+	{
+		qty1 = atoi(sval.str());
+	}
+	else if(!strcmp(param.str(),"Quantity2"))
+	{
+		qty2 = atoi(sval.str());
+	}
+	else if(!strcmp(param.str(),"ClipSize"))
+	{
+		cSize = atoi(sval.str());
+	}
+    if(!strcmp(param.str(),"Bench"))
+	{
+		bench = atof(sval.str());
+	}
+	else if(!strcmp(param.str(), "baseQty") )
+    {
+        nBaseQty = atoi(sval.str());
+    }
+}
+
+int sell_qty = 0, buy_qty = 0;
+
+if(!strcmp(side1.str(), "BUY"))
+{
+	buy_qty = qty1;
+}
+else
+{
+	sell_qty = qty1;
+}
+
+if(!strcmp(side2.str(), "BUY"))
+{
+	buy_qty = qty2;
+}
+else
+{
+	sell_qty = qty2;
+}
+
+double dExecQty1 = 0, dExecQty2 = 0;
+Get_Port_Sym_Column_Value(port.str(),sym1.str(), "PAIR_EXECS",dExecQty1);
+Get_Port_Sym_Column_Value(port.str(),sym2.str(), "PAIR_EXECS",dExecQty2);
+
+if((qty1 < dExecQty1) || (qty2 < dExecQty2))
+{
+	MsgBox("PAIR EDIT ERROR","New Target Quantity shoudl be more than Executed Quantity.\nKindly input again.",'E');
+	return false;
+}
+
+Set_Port_Sym_Column_Value(port.str(), sym1.str(), "TARGET_SIZE", qty1);
+Set_Port_Sym_Column_Value(port.str(), sym2.str(), "TARGET_SIZE", qty2);
+
+Set_Port_Sym_Column_Value(port.str(), sym1.str(), "CLIPSIZE", cSize);
+Set_Port_Sym_Column_Value(port.str(), sym2.str(), "CLIPSIZE", cSize);
+
+Set_Port_Sym_Column_Value(port.str(), sym1.str(), "SLLBY_SPREAD", bench);
+Set_Port_Sym_Column_Value(port.str(), sym2.str(), "SLLBY_SPREAD", bench);
+
+Set_Port_Sym_Column_Value(port.str(), sym1.str(), "BUY_TRGT", qty1);
+Set_Port_Sym_Column_Value(port.str(), sym2.str(), "BUY_TRGT", qty2);
+
+Set_Port_Sym_Column_Value(port.str(), sym1.str(), "SLL_TRGT", qty1);
+Set_Port_Sym_Column_Value(port.str(), sym2.str(), "SLL_TRGT", qty2);
+
+Set_Port_Sym_Column_Value(port.str(), sym1.str(), "BASE_QTY", nBaseQty);
+Set_Port_Sym_Column_Value(port.str(), sym2.str(), "BASE_QTY", nBaseQty);
+
+Set_Port_Sym_Column_Value(port.str(), sym1.str(), "VALID_PAIR", 1);
+Set_Port_Sym_Column_Value(port.str(), sym2.str(), "VALID_PAIR", 1);
+
+RunRuleOnSymPort(RA_REPLACE, sym1.str(), port.str());
+RunRuleOnSymPort(RA_REPLACE, sym2.str(), port.str());
+
+return true;
+
+
+_END_FORM_ *****************************************

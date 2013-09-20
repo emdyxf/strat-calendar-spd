@@ -1,0 +1,78 @@
+_STRT_NEW_FORM_ 1 RA_EXEC_SPREAD 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:RA_EXEC_SPREAD
+/***************************************************
+Strat Rule. Runs whenever we get a fill. Updates information on the executed shares relating to the spread.
+**************************************************/
+
+const char szRule[DEF_STR_LEN] = "RA_EXEC_SPREAD";
+
+FTStr sym1, sym2;
+double dApr1 = 0, dApr2 = 0, dFactor1 = 1.0, dFactor2 = 1.0, dRatio1 = 0.0, dRatio2 = 0.0 ;
+char paired_port[32];
+char pair_sym[32];
+char szSide1[3],szSide2[3];
+
+Get_Column_Str("PAIR_PORT",paired_port);
+Get_Column_Str("PAIR_SYM",pair_sym);
+
+if (int(Value_Cell_Else("LEG_ID",0.0)) == atoi(LEGID_1))
+{
+	sym1 = SYM;
+	Get_Column_Str("PAIR_SYM",sym2.str());
+	dRatio1 =  Value_Cell_Else("LEG_RATIO", 0);
+	Get_Port_Sym_Column_Value(paired_port, pair_sym, "LEG_RATIO", dRatio2);
+	Get_Column_Str("PAIR_SIDE", szSide1);
+	Get_Port_Sym_Column_Str(paired_port, pair_sym, "PAIR_SIDE", szSide2);
+	if(!strcmp("B",szSide1))
+	{
+		dFactor1 = -1.0;
+		dApr1 = Value_Cell_Else("BUY_APR", 0.0);
+	}
+	else
+		dApr1 = Value_Cell_Else("SELL_APR",0.0);
+		
+	if(!strcmp("B",szSide2))
+	{
+		dFactor2 = -1.0;
+		Get_Port_Sym_Column_Value_Else(paired_port, pair_sym, "BUY_APR", dApr2, 0.0);
+	}
+	else
+		Get_Port_Sym_Column_Value_Else(paired_port, pair_sym, "SELL_APR", dApr2, 0.0);
+		
+}
+else if (int(Value_Cell_Else("LEG_ID",0.0)) == atoi(LEGID_2))
+{
+	sym2 = SYM;
+	Get_Column_Str("PAIR_SYM",sym1.str());
+	dRatio2 =  Value_Cell_Else("LEG_RATIO", 0);
+	Get_Port_Sym_Column_Value(paired_port, pair_sym, "LEG_RATIO", dRatio1);
+	Get_Column_Str("PAIR_SIDE", szSide2);
+	Get_Port_Sym_Column_Str(paired_port, pair_sym, "PAIR_SIDE", szSide1);
+	if(!strcmp("B",szSide2))
+	{
+		dFactor2 = -1.0;
+		dApr2 = Value_Cell_Else("BUY_APR", 0.0);
+	}
+	else
+		dApr2 = Value_Cell_Else("SELL_APR",0.0);
+		
+	if(!strcmp("B",szSide1))
+	{
+		dFactor1 = -1.0;
+		Get_Port_Sym_Column_Value_Else(paired_port, pair_sym, "BUY_APR", dApr1, 0.0);
+	}
+	else
+		Get_Port_Sym_Column_Value_Else(paired_port, pair_sym, "SELL_APR", dApr1, 0.0);
+}
+else
+	return false;
+
+double exec_spread = (dRatio1 * dApr1 * dFactor1) + (dRatio2 * dApr2 * dFactor2 );
+
+// set the exec_spread for both rows at the same time.
+Set_Column_Value_Save("EXEC_SPREAD", exec_spread);
+Set_Port_Sym_Column_Value_Save(paired_port, pair_sym, "EXEC_SPREAD", exec_spread);
+
+return true;
+
+
+_END_FORM_ *****************************************

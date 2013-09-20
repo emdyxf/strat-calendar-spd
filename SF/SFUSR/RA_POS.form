@@ -1,0 +1,11 @@
+_STRT_NEW_FORM_ 1 RA_POS 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:RA_POS
+/***************************************************
+Strat Rule. Calculate and update positions
+**************************************************/
+
+double pos = BUY_EXEC_SHRS - SELL_EXEC_SHRS;
+Set_Column_Value("POSITION", pos);
+return true;
+
+
+_END_FORM_ *****************************************

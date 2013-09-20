@@ -1,0 +1,19 @@
+_STRT_NEW_FORM_ 1 RA_INIT 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:RA_INIT
+/***************************************************
+Strat Rule. Set tab orders on the dialog
+**************************************************/
+
+DlgSetTabOrder("Side1", 1);
+DlgSetTabOrder("Side2", 2);
+DlgSetTabOrder("symbolOption1", 3);
+DlgSetTabOrder("Lot1",4);
+DlgSetTabOrder("symbolOption2", 5);
+DlgSetTabOrder("Lot2",6);
+DlgSetTabOrder("StratName", 7);
+DlgSetTabOrder("Bench", 8);
+DlgSetTabOrder("Refresh", 9);
+
+return true;
+
+
+_END_FORM_ *****************************************

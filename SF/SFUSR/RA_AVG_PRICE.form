@@ -1,0 +1,23 @@
+_STRT_NEW_FORM_ 1 RA_AVG_PRICE 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:RA_AVG_PRICE
+/******************************************************************
+Strat Rule. Populate average price based on the order side
+******************************************************************/
+
+char side[5];
+Get_Column_Str("ORDER_SIDE",side);
+
+if(strstr(side,"B"))
+{
+	Set_Column_Value("AVG_PRICE", BUY_APR);
+	return true;
+}
+else if(strstr(side,"S"))
+{
+	Set_Column_Value("AVG_PRICE", SELL_APR);
+    return true;
+}
+else
+    return false;
+
+
+_END_FORM_ *****************************************

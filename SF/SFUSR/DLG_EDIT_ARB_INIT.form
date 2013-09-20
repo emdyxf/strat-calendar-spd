@@ -1,0 +1,16 @@
+_STRT_NEW_FORM_ 1 DLG_EDIT_ARB_INIT 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:DLG_EDIT_ARB_INIT
+/******************************************************************
+Strat DLG Rule. Initiate Strategy Editing Dialog Properties.
+******************************************************************/
+
+DlgSetProperty(NULL,"title","PAIR SPREAD : EDIT");
+DlgHideControl("ClipSize");
+DlgHideControl("Quantity1");
+DlgHideControl("Quantity2");
+//DlgDisableControl("sQty1");
+//DlgDisableControl("sQty2");
+
+return true;
+
+
+_END_FORM_ *****************************************

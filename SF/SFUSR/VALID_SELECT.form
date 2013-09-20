@@ -1,0 +1,30 @@
+_STRT_NEW_FORM_ 1 VALID_SELECT 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:VALID_SELECT
+/******************************************************************
+Reserved Rule. Runs when selecting a row.
+******************************************************************/
+
+char StratPairID[32]="";
+Get_Column_Str("PAIR_ID",StratPairID);
+
+if(strlen(StratPairID)) //Display Pair orders together
+{
+	FilterOinfo(NULL,NULL,PORTFOLIO);
+}
+else
+{
+	FlexAppRules::RowInfoArray row;
+	int nRows = MainGetSelectedRows(row);
+	if(nRows >1)
+	{
+		FilterOinfo(NULL,NULL,PORTFOLIO);
+	}
+	else
+	{
+		FilterOinfo(SYM,NULL,PORTFOLIO);
+	}
+}
+
+return true;
+
+
+_END_FORM_ *****************************************

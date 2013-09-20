@@ -1,0 +1,29 @@
+_STRT_NEW_FORM_ 1 L2_LAUNCH 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:L2_LAUNCH
+/******************************************************************
+Choose the layout based on the symbol type. Spread Symbols have a different SS or L2 Layout
+******************************************************************/
+
+bool bSetLadderParams = true;
+FlexAppRules::RowInfoArray rowInfoArr;
+int nSelected = MainGetSelectedRows(rowInfoArr);
+
+char szCmdStr[256]= "dashboard rows-1 cols-";
+sprintf(szCmdStr,"%s%d ",szCmdStr,nSelected);
+for (int i = 0; i < nSelected; i++)
+{
+	if(strstr(rowInfoArr[i].GetSymbol(),"-"))
+		sprintf(szCmdStr,"%s l2-%s ",szCmdStr,"ladderSpread");
+	else
+	{
+		sprintf(szCmdStr,"%s l2-%s ",szCmdStr,"ladderOutright");
+		bSetLadderParams = true;
+	}	
+}
+
+Pop_Msg(szCmdStr);
+Run_Cmd(szCmdStr);
+
+return true;
+
+
+_END_FORM_ *****************************************

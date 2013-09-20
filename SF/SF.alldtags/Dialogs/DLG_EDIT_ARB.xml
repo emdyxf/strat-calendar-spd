@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?><flextrade>
+
+<broker name="Dialogs">
+	<strat CancelAnalytic="" SubmitAnalytic="" fixtag="0" height="113" name="DLG_EDIT_ARB" refreshanalytic="" showbuttons="true" startupanalytic="DLG_EDIT_ARB_INIT" width="469" x="368" y="300">
+		<param anchor="5" fixtag="0" isstring="false" name="lblBench" required="false" type="label" visible="true" x="301" y="90">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#E5E5E5</fgcolor>
+			<font></font>
+			<label>Bench</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="Sym1" required="false" type="label" visible="true" x="104" y="23">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#BFBFBF</fgcolor>
+			<font>Sans 10</font>
+			<label>-</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="Side2" required="false" type="label" visible="true" x="34" y="56">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#ADD8E6</fgcolor>
+			<font>Sans 10</font>
+			<label>-</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="lblRatio" required="false" type="label" visible="true" x="230" y="1">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#FFFFFF</fgcolor>
+			<font></font>
+			<label>Ratio</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="Bench" required="false" type="doublespin" visible="true" x="355" y="85">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<default>1.000000</default>
+			<spintype>1.000000</spintype>
+			<min>-99999.000000</min>
+			<max>99999.000000</max>
+			<step>0.050000</step>
+			<decimal>2</decimal>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="sQty1" required="false" type="doublespin" visible="true" x="219" y="17">
+			<value>0.000000</value>
+			<analytic>RA_EDIT_QTY</analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<default>1.000000</default>
+			<spintype>1.000000</spintype>
+			<min>1.000000</min>
+			<max>99999.000000</max>
+			<step>1.000000</step>
+			<decimal>0</decimal>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="lblClip" required="false" type="label" visible="false" x="325" y="90">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#BFBFBF</fgcolor>
+			<font></font>
+			<label>ClipSize</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="sClipSize" required="false" type="doublespin" visible="false" x="219" y="85">
+			<value>0.000000</value>
+			<analytic>RA_EDIT_CLIPSIZE</analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<default>1.000000</default>
+			<spintype>1.000000</spintype>
+			<min>1.000000</min>
+			<max>99999.000000</max>
+			<step>1.000000</step>
+			<decimal>0</decimal>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="Side1" required="false" type="label" visible="true" x="34" y="23">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#ADD8E6</fgcolor>
+			<font>Sans 10</font>
+			<label>-</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="Sym2" required="false" type="label" visible="true" x="104" y="56">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#BFBFBF</fgcolor>
+			<font>Sans 10</font>
+			<label>-</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="lblLotSize" required="false" type="label" visible="true" x="330" y="1">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#F7F7F7</fgcolor>
+			<font></font>
+			<label>LotSize</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="Label14" required="false" type="label" visible="true" x="303" y="23">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<label>X</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="Label15" required="false" type="label" visible="true" x="303" y="56">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<label>X</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="LotSize1" required="false" type="label" visible="true" x="341" y="23">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#BFBFBF</fgcolor>
+			<font></font>
+			<label>1</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="LotSize2" required="false" type="label" visible="true" x="341" y="56">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#BFBFBF</fgcolor>
+			<font></font>
+			<label>1</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="true" name="Quantity1" required="false" type="entry" visible="true" x="446" y="6">
+			<value></value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<default></default>
+			<size>10</size>
+		</param>
+		<param anchor="5" fixtag="0" isstring="true" name="Quantity2" required="false" type="entry" visible="true" x="446" y="35">
+			<value></value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<default></default>
+			<size>10</size>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="Separator1" required="false" type="separator" visible="true" x="5" y="77">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<vertical>false</vertical>
+			<length>460</length>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="Label13" required="false" type="label" visible="true" x="392" y="1">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#FDFDFD</fgcolor>
+			<font></font>
+			<label>Total Qty</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="lblQuantity1" required="false" type="label" visible="true" x="403" y="23">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<label>-</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="lblQuantity2" required="false" type="label" visible="true" x="403" y="56">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<label>-</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="sQty2" required="false" type="doublespin" visible="true" x="219" y="49">
+			<value>0.000000</value>
+			<analytic>RA_EDIT_QTY2</analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<default>1.000000</default>
+			<spintype>1.000000</spintype>
+			<min>1.000000</min>
+			<max>99999.000000</max>
+			<step>1.000000</step>
+			<decimal>0</decimal>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="Label16" required="false" type="label" visible="false" x="303" y="92">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<label>X</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="LotSize" required="false" type="label" visible="false" x="336" y="92">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#BFBFBF</fgcolor>
+			<font></font>
+			<label>1</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="false" name="tbClipSize" required="false" type="label" visible="false" x="403" y="90">
+			<value>0.000000</value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor>#BFBFBF</fgcolor>
+			<font></font>
+			<label>-</label>
+			<image></image>
+		</param>
+		<param anchor="5" fixtag="0" isstring="true" name="ClipSize" required="false" type="entry" visible="true" x="446" y="85">
+			<value></value>
+			<analytic></analytic>
+			<description></description>
+			<bgcolor></bgcolor>
+			<fgcolor></fgcolor>
+			<font></font>
+			<default></default>
+			<size>10</size>
+		</param>
+	</strat>
+</broker>
+
+</flextrade>

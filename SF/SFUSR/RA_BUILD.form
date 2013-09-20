@@ -1,0 +1,249 @@
+_STRT_NEW_FORM_ 1 RA_BUILD 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:RA_BUILD
+/******************************************************************
+Strat Rule. Pop dialog and build strategy with parameters from input
+******************************************************************/
+
+char strDebug[512]="";
+char strRule[32]="RA_BUILD";
+char strtemp[32]="";
+
+Pop_Msg(strRule);
+
+FTStr s, sval, param;
+FTStr sym1, sym2, port, side1, side2, ftStratName;
+FTStr account, isRatio;
+s = "";
+account = "";
+
+FlexAppRules::RowInfoArray row;
+int nRows = MainGetSelectedRows(row);
+if(nRows ==2)
+{
+	if(!strcmp(row[0].GetPortfolio(),row[1].GetPortfolio()))
+	{
+		if (GetInstrType(row[0].GetSymbol()) == GetInstrType(row[1].GetSymbol()))
+		{
+			sym1 = row[0].GetSymbol();
+			sym2 = row[1].GetSymbol();
+		
+			param = "symbolOption1";
+			sval = sym1;
+			s.Set_Param_Sval(param,sval);
+
+			param = "symbolOption2";
+			sval = sym2;
+			s.Set_Param_Sval(param,sval);
+
+			Pop_Msg1(s);
+		}
+		else
+		{
+			MsgBox("STRAT from Selected Rows", "Please select two symbols of same underlying", 'E');
+			return false;
+		}
+	}
+	FTStr msgSelRows;
+	msgSelRows+="Port1=";msgSelRows+=row[0].GetPortfolio();msgSelRows+=" Sym1=";msgSelRows+=row[0].GetSymbol();
+	msgSelRows+=" Port2=";msgSelRows+=row[1].GetPortfolio();msgSelRows+=" Sym2=";msgSelRows+=row[1].GetSymbol();
+	Pop_Msg(msgSelRows);
+}
+
+int flag = Prompt_Dlg("DLG_BUILD_ARB",s);
+if(!flag) return 0;
+
+double bench = 0.0;
+int lot1 = 0, lot2 = 0, clipsize = 0, qty1 = 0, qty2 = 0,nBaseQty=1, nLegId1=0, nLegId2=0;
+
+while(s.Get_Param_Sval(param,sval))
+{	
+	if(!strcmp(param.str(),"tbSym1"))
+	{
+		sym1 = sval;
+	}
+	else if(!strcmp(param.str(),"tbSym2"))
+	{
+		sym2 = sval;
+	}
+    if(!strcmp(param.str(),"StratName"))
+	{
+		port = sval;
+	}
+	else if(!strcmp(param.str(),"Side1"))
+	{
+		side1 = sval;
+	}
+	else if(!strcmp(param.str(),"Side2"))
+	{
+		side2 = sval;
+	}
+	else if(!strcmp(param.str(),"Lot1"))
+	{
+		lot1 = atoi(sval.str());
+	}
+	else if(!strcmp(param.str(),"Lot2"))
+	{
+		lot2 = atoi(sval.str());
+	}
+	else if(!strcmp(param.str(),"Ratio"))
+	{
+		isRatio = sval;
+	}
+	else if(!strcmp(param.str(),"Bench"))
+	{
+		bench = atof(sval.str());
+	}
+	else if(!strcmp(param.str(), "tbQty1") )
+    {
+        qty1 = atoi(sval.str());
+    }
+	else if(!strcmp(param.str(), "tbQty2") )
+    {
+        qty2 = atoi(sval.str());
+    }
+	else if(!strcmp(param.str(), "tbClipSize") )
+    {
+		clipsize = atoi(sval.str());
+    }
+	else if(!strcmp(param.str(), "baseQty") )
+    {
+        nBaseQty = atoi(sval.str());
+    }
+	else if(!strcmp(param.str(),"tbLegId1"))
+	{
+		nLegId1 = atoi(sval.str());
+	}
+	else if(!strcmp(param.str(),"tbLegId2"))
+	{
+		nLegId2 = atoi(sval.str());
+	}
+}
+
+if(strcmp(sym1.str(), sym2.str())==0)
+{
+	MsgBox("ERROR", "Enter two different symbols of same underlying", 'E');
+	return false;
+}
+
+char stime[12];
+Current_Time6(stime);
+
+char pairId[12];
+sprintf(pairId, "%s",stime); 
+int valid_pair = 1;
+
+if(strlen(port) == 0)
+	ftStratName = pairId;
+else
+	ftStratName = port;
+
+port = pairId;
+   
+if (lot1==0 || lot2==0 || nBaseQty ==0)
+{
+	Pop_Msg1("Lot Size or Base Qty is ZERO! Abort building strategy!");
+	return false;
+}
+int lotsize1 = qty1 / ( lot1 * nBaseQty );
+int lotsize2 = qty2 / ( lot2 * nBaseQty );
+int sell_qty = 0, buy_qty = 0;
+
+if (strstr(side1.str(),"BUY"))
+{
+	Add_Symbol_Buy(port.str(),sym1.str(),qty1);
+	buy_qty = qty1;
+	Set_Port_Sym_Column_Value_Save(port.str(),sym1.str(), "BUY_TRGT", qty1);
+	Set_Port_Sym_Column_Value_Save(port.str(),sym1.str(), "TARGET_SIZE", qty1);
+	Set_Port_Sym_Column_Str_Save(port.str(),sym1.str(), "ORDER_SIDE", "BUY");
+	Set_Port_Sym_Column_Str_Save(port.str(),sym1.str(), "PAIR_SIDE", "B");
+}
+else if (strstr(side1.str(),"SELL"))
+{
+	Add_Symbol_Sell(port.str(),sym1.str(),qty1);
+	sell_qty = qty1;
+	Set_Port_Sym_Column_Value_Save(port.str(),sym1.str(), "SLL_TRGT", qty1);
+	Set_Port_Sym_Column_Value_Save(port.str(),sym1.str(), "TARGET_SIZE", qty1);
+	Set_Port_Sym_Column_Str_Save(port.str(),sym1.str(), "ORDER_SIDE", "SELL");
+	Set_Port_Sym_Column_Str_Save(port.str(),sym1.str(), "PAIR_SIDE", "S");
+}
+
+if (strstr(side2.str(), "BUY"))
+{
+	Add_Symbol_Buy(port.str(),sym2.str(),qty2);
+	buy_qty = qty2;
+	Set_Port_Sym_Column_Value_Save(port.str(),sym2.str(), "BUY_TRGT", qty2);
+	Set_Port_Sym_Column_Value_Save(port.str(),sym2.str(), "TARGET_SIZE", qty2);
+	Set_Port_Sym_Column_Str_Save(port.str(),sym2.str(), "ORDER_SIDE", "BUY");
+	Set_Port_Sym_Column_Str_Save(port.str(),sym2.str(), "PAIR_SIDE", "B");
+}
+else if (strstr(side2.str(), "SELL"))
+{
+	Add_Symbol_Sell(port.str(),sym2.str(),qty2);
+	sell_qty = qty2;
+	Set_Port_Sym_Column_Value_Save(port.str(),sym2.str(), "SLL_TRGT", qty2);
+	Set_Port_Sym_Column_Value_Save(port.str(),sym2.str(), "TARGET_SIZE", qty2);
+	Set_Port_Sym_Column_Str_Save(port.str(),sym2.str(), "ORDER_SIDE", "SELL");
+	Set_Port_Sym_Column_Str_Save(port.str(),sym2.str(), "PAIR_SIDE", "S");
+}
+
+Set_Port_Sym_Column_Str_Save(port.str(),sym1.str(),"PAIR_SYM",sym2.str());
+Set_Port_Sym_Column_Str_Save(port.str(),sym2.str(),"PAIR_SYM",sym1.str());
+
+Set_Port_Sym_Column_Str_Save(port.str(),sym1.str(),"PAIR_PORT",port.str());
+Set_Port_Sym_Column_Str_Save(port.str(),sym2.str(),"PAIR_PORT",port.str());
+
+Set_Port_Sym_Column_Value_Save(port.str(),sym1.str(), "SLLBY_SPREAD", bench);
+Set_Port_Sym_Column_Value_Save(port.str(),sym2.str(), "SLLBY_SPREAD", bench);
+
+Set_Port_Sym_Column_Str_Save(port.str(),sym1.str(), "PAIR_ID", pairId);
+Set_Port_Sym_Column_Str_Save(port.str(),sym2.str(), "PAIR_ID", pairId);
+
+Set_Port_Sym_Column_Value_Save(port.str(),sym1.str(), "CLIPSIZE", clipsize);
+Set_Port_Sym_Column_Value_Save(port.str(),sym2.str(), "CLIPSIZE", clipsize);
+
+Set_Port_Sym_Column_Value_Save(port.str(),sym1.str(), "VALID_PAIR", valid_pair);
+Set_Port_Sym_Column_Value_Save(port.str(),sym2.str(), "VALID_PAIR", valid_pair);
+ 
+Set_Port_Sym_Column_Str_Save(port.str(),sym1.str(), "STRAT_NAME", ftStratName.str());
+Set_Port_Sym_Column_Str_Save(port.str(),sym2.str(), "STRAT_NAME", ftStratName.str());
+ 
+Set_Port_Sym_Column_Value_Save(port.str(),sym1.str(), "LEG_ID", nLegId1);
+Set_Port_Sym_Column_Value_Save(port.str(),sym2.str(), "LEG_ID", nLegId2);
+
+// For first leg
+double ratio = lot1;
+
+bool bAutoEnabled = Is_Auto_Enabled();
+if(!bAutoEnabled)
+	Enable_Auto_Trade();
+
+// Strategy Tokens For NEW
+// 0	1	  2 	3	   4 	  5 	  6		7		 8	  9			10	    11	   12 
+//sym1 sym2 side1 side2 pairid portfolio bench qty clipsize valid_pair ratio lotsize legid
+		
+	sprintf(strDebug,"%s,%s,%s,%s,%s,%s,%.3f,%d,%d,%d,%.3f,%d,%d",
+			sym1.str(),sym2.str(),side1.str(),side2.str(), pairId, port.str(),
+			bench, qty1, clipsize, valid_pair, ratio, lotsize1, nLegId1);
+	Pop_Msg1(strDebug);
+	Set_param_str(strDebug,0);
+	
+	Set_Port_Sym_Column_Value_Save(port.str(),sym1.str(), "LEG_RATIO", ratio);
+	Set_Port_Sym_Column_Value_Save(port.str(),sym1.str(), "BASE_QTY", nBaseQty);
+	RunRuleOnSymPort(RA_SENT, sym1.str(), port.str()); 
+	
+//For second leg
+ratio = lot2;
+	
+	sprintf(strDebug,"%s,%s,%s,%s,%s,%s,%.3f,%d,%d,%d,%.3f,%d,%d",
+			sym1.str(),sym2.str(),side1.str(),side2.str(), pairId, port.str(),
+			bench, qty2, clipsize, valid_pair, ratio, lotsize2, nLegId2);
+	Pop_Msg1(strDebug);
+	Set_param_str(strDebug,0);
+	
+	Set_Port_Sym_Column_Value_Save(port.str(),sym2.str(), "LEG_RATIO", ratio);
+	Set_Port_Sym_Column_Value_Save(port.str(),sym2.str(), "BASE_QTY", nBaseQty);
+	RunRuleOnSymPort(RA_SENT, sym2.str(), port.str());  
+
+return true;
+
+
+_END_FORM_ *****************************************

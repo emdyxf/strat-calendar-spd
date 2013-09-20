@@ -1,0 +1,10 @@
+PROJ_CALSPD_v1.1.01
+- Support Rolls Strategy with Limit Orders
+- Support Contract Symbols: AU, AG, CU 
+
+PROJ_CALSPD_v1.1.02
+- Support Additional Contract Symbol: IF
+- Supported Contract Symbol List: AU, AG, CU, IF
+
+PROJ_CALSPD_v1.1.03
+- Support IOC Operation: All unfilled orders will be cancelled upon next market movement

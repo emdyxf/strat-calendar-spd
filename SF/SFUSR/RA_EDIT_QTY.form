@@ -1,0 +1,41 @@
+_STRT_NEW_FORM_ 1 RA_EDIT_QTY 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:RA_EDIT_QTY
+/******************************************************************
+Strat Rule. Update Quantities of Leg 1
+******************************************************************/
+
+char lotsize1[32];
+char lotsize2[32];
+char cSize[32];
+int s1 = 0, s2 = 0;
+int c1 = 0;
+FTStr cs;
+int nBaseQty = 1;
+
+DlgGetControlValue("LotSize1",lotsize1);
+DlgGetControlValue("sQty1", cSize);
+
+s1 = atoi(lotsize1);
+s2 = atoi(cSize);
+
+c1 = s1 * s2 * nBaseQty;
+cs = c1;
+
+DlgSetControlValue("Quantity1", cs.str());
+DlgSetControlValue("lblQuantity1", cs.str());
+
+DlgGetControlValue("LotSize2",lotsize1);
+DlgGetControlValue("sQty2", cSize);
+
+s1 = atoi(lotsize1);
+s2 = atoi(cSize);
+
+c1 = s1 * s2 * nBaseQty;
+cs = c1;
+
+DlgSetControlValue("Quantity2", cs.str());
+DlgSetControlValue("lblQuantity2", cs.str());
+
+return true;
+
+
+_END_FORM_ *****************************************

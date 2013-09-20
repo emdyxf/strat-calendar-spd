@@ -1,0 +1,51 @@
+_STRT_NEW_FORM_ 1 SEND_SOD 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:SEND_SOD
+Pop_Msg1("In SEND_SOD");
+char strDebug[216]="";
+
+char pId[12]="";
+Get_Column_Str("PAIR_ID", pId);
+long int pairId = atol(pId);
+
+char side1[5]="";
+char side2[5]="";
+Get_Column_Str("ORDER_SIDE", side1);
+
+if(strstr(side1, "BUY"))
+{
+	strcpy(side2,"SELL");
+}
+else
+{
+	strcpy(side2,"BUY");
+}
+
+int qty = 0;
+Get_Column_Value("TARGET_SIZE", qty);
+
+int clipsize = 0;
+Get_Column_Value("CLIPSIZE", clipsize);
+
+int valid_pair = 1;
+Set_Column_Value("VALID_PAIR", 1);
+
+char account[20]="";
+Get_Column_Str("ACCOUNT", account);
+
+char pair_sym[32]="";
+Get_Column_Str("PAIR_SYM", pair_sym);
+
+double bench = 0.0;
+Get_Column_Value("SLLBY_SPREAD", bench);
+
+char pair_port[32]="";
+Get_Column_Str("PAIR_PORT", pair_port);
+
+//sym1 sym2 side1 side2 pairid bench qty client clipsize portfolio valid_pair
+sprintf(strDebug,"%s %s %s %s %s %.3f %d %s %d %s %d",SYM, pair_sym, side1,side2, pId, bench, qty, account, clipsize, pair_port, valid_pair);
+Set_param_str(strDebug,0);
+
+RunRule(RA_SENT);
+return true;
+
+
+_END_FORM_ *****************************************

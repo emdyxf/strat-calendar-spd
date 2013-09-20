@@ -1,0 +1,28 @@
+_STRT_NEW_FORM_ 1 RA_SIDE_CHK 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:RA_SIDE_CHK
+/***************************************************
+Strat Rule. Link the sides of the two legs on the dialog box
+- If side of leg 1 is changed, automatically change the side of leg 2
+**************************************************/
+
+// Return FALSE here if desire to unlink the sides
+//return false;
+
+char side1[32];
+char side2[32];
+
+DlgGetControlValue("Side1",side1);
+DlgGetControlValue("Side2",side2);
+
+if(strstr(side1,"SELL"))
+{
+	DlgSetControlValue("Side2","BUY");
+}
+else if(strstr(side1,"BUY"))
+{
+	DlgSetControlValue("Side2","SELL");
+}
+
+return 0;
+
+
+_END_FORM_ *****************************************

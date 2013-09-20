@@ -1,0 +1,12 @@
+_STRT_NEW_FORM_ 1 RA_STOP_ALL 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:RA_STOP_ALL
+/***************************************************
+Strat Rule. Call rules to stop selected strategy
+**************************************************/
+
+if(!Is_Selected())
+	return false;
+RunRule(RA_STOP);
+return true;
+
+
+_END_FORM_ *****************************************

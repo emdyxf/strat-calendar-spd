@@ -1,0 +1,55 @@
+_STRT_NEW_FORM_ 1 RA_GET_LOT 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:RA_GET_LOT
+/***************************************************
+Strat Rule. Update target quantities from dialog input
+**************************************************/
+
+FTStr sym1, sym2;
+
+char lotVal[32];
+char lotsize1[32];
+char lotsize2[32];
+char quantity[32];
+char maxosize[32];
+
+int s1 = 0, s2 = 0, s3 = 0;
+int q1 = 0, q2 = 0, q3 = 0, q4 = 0;
+FTStr lt1, lt2, qty1, qty2, qty3, qty4;
+
+DlgGetControlValue("Sym1", sym1.str());
+DlgGetControlValue("Sym2", sym2.str());
+
+int lot1 = GetSymbolLotSize(sym1);
+int lot2 = GetSymbolLotSize(sym2);
+
+lt1 = lot1;
+lt2 = lot2;
+
+DlgSetControlValue("LotSize1", lt1.str());
+DlgSetControlValue("LotSize2", lt2.str());
+
+DlgGetControlValue("sClipSize", maxosize);
+s2 = atoi(maxosize);
+
+q2 = s2 * lot2;
+
+qty2 = q2;
+
+DlgGetControlValue("Lot1",lotVal);
+s3 = atoi(lotVal);
+
+DlgSetControlValue("ClipSize", qty2.str());
+
+q3 = s3 * lot1;
+q4 = s3 * lot2;
+
+qty3 = q3;
+qty4 = q4;
+
+DlgSetControlValue("Qty1", qty3.str());
+DlgSetControlValue("Qty2", qty4.str());
+DlgSetControlValue("Quantity", lt1.str());
+
+return true;
+
+
+_END_FORM_ *****************************************

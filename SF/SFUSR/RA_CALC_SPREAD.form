@@ -1,0 +1,89 @@
+_STRT_NEW_FORM_ 1 RA_CALC_SPREAD 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:RA_CALC_SPREAD
+/**************************************************
+Strat Rule. Calculates the current market spread
+*************************************************/
+
+const char szRule[DEF_STR_LEN] = "RA_CALC_SPREAD";
+
+FTStr sym1, sym2;
+double price1 = 0, price2 = 0, dFactor1 = 1.0, dFactor2 = 1.0, dRatio1 = 0.0, dRatio2 = 0.0 ;
+char paired_port[32];
+char pair_sym[32];
+char szSide1[3],szSide2[3];
+
+Get_Column_Str("PAIR_PORT",paired_port);
+Get_Column_Str("PAIR_SYM",pair_sym);
+
+if (int(Value_Cell_Else("LEG_ID",0.0)) == atoi(LEGID_1))
+{
+	sym1 = SYM;
+	Get_Column_Str("PAIR_SYM",sym2.str());
+	dRatio1 =  Value_Cell_Else("LEG_RATIO", 0);
+	Get_Port_Sym_Column_Value(paired_port, pair_sym, "LEG_RATIO", dRatio2);
+	Get_Column_Str("PAIR_SIDE", szSide1);
+	Get_Port_Sym_Column_Str(paired_port, pair_sym, "PAIR_SIDE", szSide2);
+}
+else if (int(Value_Cell_Else("LEG_ID",0.0)) == atoi(LEGID_2))
+{
+	sym2 = SYM;
+	Get_Column_Str("PAIR_SYM",sym1.str());
+	dRatio2 =  Value_Cell_Else("LEG_RATIO", 0);
+	Get_Port_Sym_Column_Value(paired_port, pair_sym, "LEG_RATIO", dRatio1);
+	Get_Column_Str("PAIR_SIDE", szSide2);
+	Get_Port_Sym_Column_Str(paired_port, pair_sym, "PAIR_SIDE", szSide1);
+}
+else
+	return false;
+
+MarketInfo minfo1(sym1), minfo2(sym2);
+	
+/*
+CPriceInfo* pInfo1 = FindPriceInfo(sym1, 0);
+if(!pInfo1)
+{
+        pInfo1 = FindPriceInfo(sym1,1);
+        static FlexAppRules::MarketInfo minfo1(sym1);
+}
+
+CPriceInfo* pInfo2 = FindPriceInfo(sym2, 0);
+if(!pInfo2)
+{
+        pInfo2 = FindPriceInfo(sym2,1);
+        static FlexAppRules::MarketInfo minfo2(sym2);
+}
+*/
+
+if(!strcmp("B",szSide1))
+{
+//	price1 = pInfo1->Ask();
+	price1 = minfo1.GetAsk();
+	dFactor1 = -1.0;
+}
+else
+{
+//	price1 = pInfo1->Bid();
+	price1 = minfo1.GetBid();
+}
+
+if(!strcmp("B",szSide2))
+{
+//	price2 = pInfo2->Ask();
+	price2 = minfo2.GetAsk();
+	dFactor2 = -1.0;
+}
+else
+{
+//	price2 = pInfo2->Bid();
+	price2 = minfo2.GetBid();
+}
+
+double mkt_spread = (dRatio1 * price1 * dFactor1) + (dRatio2 * price2 * dFactor2 );
+
+// set the mkt_spread for both rows at the same time.
+Set_Column_Value("MKT_SPREAD", mkt_spread);
+Set_Port_Sym_Column_Value(paired_port, pair_sym, "MKT_SPREAD", mkt_spread);
+
+return true;
+
+
+_END_FORM_ *****************************************

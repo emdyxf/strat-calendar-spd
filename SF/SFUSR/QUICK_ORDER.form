@@ -1,0 +1,24 @@
+_STRT_NEW_FORM_ 1 QUICK_ORDER 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:QUICK_ORDER
+char colName[32]="";
+Get_param_str(colName, 0);
+int valid_pair;
+
+if(strcmp(colName,"VALID_PAIR")==0)
+{
+   Get_Column_Value_Else("VALID_PAIR", valid_pair, -2);
+   if(valid_pair == 1)
+   {
+		RunRule(RA_STOP);
+   }
+   else if(valid_pair == 0)
+   {
+		RunRule(RA_RESTART);
+   }
+   else
+		return 0;
+}
+
+return true;
+
+
+_END_FORM_ *****************************************

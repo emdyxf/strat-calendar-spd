@@ -1,0 +1,66 @@
+_STRT_NEW_FORM_ 1 RA_SENT 0^0:prec2:gblank:No:::rank_n:const_n:exp_n::1:-1::false::false:unlocked:RA_SENT
+/***************************************************
+Strat Rule. Send new strategy order
+**************************************************/
+
+Pop_Msg1("In RA_SENT");
+char strDebug[216]="";
+char strFix[216]="";
+char token[50][50];
+int i = 0;
+char strRule[20]="RA_SENT";
+
+Get_param_str(strFix,0);
+Pop_Msg(strFix);
+
+// Strategy Tokens For NEW
+// 0	1	  2 	3	   4 	  5 	  6		7		 8	  9			10	    11	   12 
+//sym1 sym2 side1 side2 pairid portfolio bench qty clipsize valid_pair ratio lotsize legid
+
+if(strlen(strFix) > 0)
+{
+	char *p = strtok(strFix,",");
+	while(p)
+	{
+	sprintf(token[i],"%s",p);	
+	i++;
+	p = strtok(NULL,",");
+	}
+}
+
+double dblPrice = atof(token[TOKEN_BENCH]);
+int shares = atoi(token[TOKEN_QTY]);
+
+if(dblPrice < 0) { dblPrice = dblPrice * (-1); }
+Set_Order_Price(dblPrice);
+Set_Order_Shares(shares);
+long int pairId = atol(token[TOKEN_PAIRID]);
+
+if(strcmp(SYM,token[TOKEN_SYM_1])== 0)
+{
+	if(strstr(token[TOKEN_SIDE_1],"BUY")) {
+	Set_Order_Price(ASK+1);
+	Set_Order_Side_Buy(); } 
+	else {
+	Set_Order_Price(BID+2);
+	Set_Order_Side_Sell();
+	}	
+}
+else {
+	if(strstr(token[TOKEN_SIDE_2],"BUY")) {
+	Set_Order_Price(ASK+1);
+	Set_Order_Side_Buy(); } 
+	else {
+	Set_Order_Price(BID+2);
+	Set_Order_Side_Sell();
+	}	
+}
+
+Set_Order_Dest(ALGO_DEST);
+
+Auto_Send_Order(NO_CONFIRM,pairId);
+
+return true;
+
+
+_END_FORM_ *****************************************
